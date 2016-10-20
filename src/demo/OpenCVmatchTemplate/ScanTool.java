@@ -1,4 +1,4 @@
-package demo.OpenCVcanny;
+package demo.OpenCVmatchTemplate;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;

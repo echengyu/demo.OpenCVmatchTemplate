@@ -1,4 +1,4 @@
-package demo.OpenCVcanny;
+package demo.OpenCVmatchTemplate;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -62,7 +62,7 @@ public class ImageActivity extends Activity implements CvCameraViewListener2 {
 		Log.i(TAG, "called onCreate");
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		setContentView(R.layout.image_manipulations_surface_view_2);
+		setContentView(R.layout.image_manipulations_surface_view_4);
 		mOpenCvCameraView = (ScanTool) findViewById(R.id.image_activity_view);
 		mOpenCvCameraView.setCvCameraViewListener(this);
 		
