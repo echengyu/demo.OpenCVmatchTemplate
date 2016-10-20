@@ -7,18 +7,28 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.Core.MinMaxLocResult;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.WindowManager;
-import android.widget.SeekBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +41,9 @@ public class ImageActivity extends Activity implements CvCameraViewListener2 {
 	private android.hardware.Camera.Size resolution = null;
 	private SubMenu mResolutionMenu;
 	private MenuItem[] mResolutionMenuItems;
+	
+	private ImageView imageView0, imageView1;
+	private TextView textView0, textView1, textView2, textView3, textView4, textView5;
 	
 	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 		@Override
@@ -62,6 +75,15 @@ public class ImageActivity extends Activity implements CvCameraViewListener2 {
 		setContentView(R.layout.picture_view);
 		mOpenCvCameraView = (ScanTool) findViewById(R.id.picture_view0);
 		mOpenCvCameraView.setCvCameraViewListener(this);
+		
+		imageView0 = (ImageView) findViewById(R.id.imageView0);
+		imageView1 = (ImageView) findViewById(R.id.imageView1);
+		textView0 = (TextView) findViewById(R.id.textView0);
+		textView1 = (TextView) findViewById(R.id.textView1);
+		textView2 = (TextView) findViewById(R.id.textView2);
+		textView3 = (TextView) findViewById(R.id.textView3);
+		textView4 = (TextView) findViewById(R.id.textView4);
+		textView5 = (TextView) findViewById(R.id.textView5);
 	}
 
 	@Override
@@ -137,8 +159,75 @@ public class ImageActivity extends Activity implements CvCameraViewListener2 {
 	}
 
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-		Mat rgba = inputFrame.rgba();
+		Mat src = inputFrame.rgba();	
+		
+		/*
+		Mat template = new Mat();
+		final Mat src = inputFrame.rgba();
+	    int match_method = Imgproc.TM_SQDIFF;
+		
+		Bitmap bt1 = BitmapFactory.decodeResource(getResources(), R.drawable.facemin);
+		Utils.bitmapToMat(bt1, template);
+//		Imgproc.cvtColor(template, template, Imgproc.COLOR_BGR2RGBA);
+		
+		// Create the result matrix
+	    int result_cols = src.cols() - template.cols() + 1;
+	    int result_rows = src.rows() - template.rows() + 1;
+		Mat result = new Mat(result_rows, result_cols, CvType.CV_32F);
+		
+		// Do the Matching and Normalize
+	    Imgproc.matchTemplate(src, template, result, match_method);
+	    Core.normalize(result, result, 0, 1, Core.NORM_MINMAX, -1, new Mat());
+	    
+	    // Localizing the best match with minMaxLoc
+	    MinMaxLocResult mmr = Core.minMaxLoc(result);
 
-		return rgba;
+	    Point matchLoc;
+	    if (match_method == Imgproc.TM_SQDIFF || match_method == Imgproc.TM_SQDIFF_NORMED) {
+	        matchLoc = mmr.minLoc;
+	    } else {
+	        matchLoc = mmr.maxLoc;
+	    }
+	    
+//	    Core.rectangle(src, matchLoc, matchLoc, new Scalar(255, 0, 0, 255), 2);
+	    
+	    Rect roi = new Rect((int) matchLoc.x, (int) matchLoc.y, template.cols(), template.rows());
+	    Core.rectangle(src, new Point(roi.x, roi.y), new Point(roi.width - 2, roi.height - 2), new Scalar(255, 0, 0, 255), 2);
+		
+	    final Mat mTmp = new Mat();
+	    template.copyTo(mTmp);
+	    */
+	    
+		Thread t = new Thread() {
+		    public void run() {
+		        runOnUiThread(new Runnable() {
+		            @Override
+		            public void run() {
+		            	
+		            	/*
+		            	textView0.setText(String.valueOf(m0));
+		            	textView1.setText(String.valueOf(m1));
+		            	textView2.setText(String.valueOf(m2));
+		            	textView3.setText(String.valueOf(m3));
+		            	textView4.setText(String.valueOf(m4));
+		            	textView5.setText(String.valueOf(m5));
+		            	*/
+		            	
+		            	/*
+		            	Bitmap bt3 = Bitmap.createBitmap(mTmp.cols(), mTmp.rows(), Config.RGB_565);
+		        		Utils.matToBitmap(mTmp, bt3);
+		        		imageView0.setImageBitmap(bt3);
+						*/
+		            	
+		            	imageView0.setImageResource(R.drawable.why);
+		            	imageView1.setImageResource(R.drawable.why);
+
+		            }
+		        });
+		    }
+		};
+		t.start();
+		
+		return src;
 	}
 }
