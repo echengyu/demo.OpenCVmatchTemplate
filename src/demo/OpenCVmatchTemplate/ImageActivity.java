@@ -32,9 +32,6 @@ public class ImageActivity extends Activity implements CvCameraViewListener2 {
 	private SubMenu mResolutionMenu;
 	private MenuItem[] mResolutionMenuItems;
 	
-	private double threshold1 = 60;
-	private double threshold2 = 60;
-
 	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 		@Override
 		public void onManagerConnected(int status) {
@@ -62,109 +59,9 @@ public class ImageActivity extends Activity implements CvCameraViewListener2 {
 		Log.i(TAG, "called onCreate");
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		setContentView(R.layout.image_manipulations_surface_view_4);
-		mOpenCvCameraView = (ScanTool) findViewById(R.id.image_activity_view);
+		setContentView(R.layout.picture_view);
+		mOpenCvCameraView = (ScanTool) findViewById(R.id.picture_view0);
 		mOpenCvCameraView.setCvCameraViewListener(this);
-		
-		TextView textViewName0 = (TextView)findViewById(R.id.textViewName0);
-		textViewName0.setText("Threshold1");
-		SeekBar seekBar0 = (SeekBar)findViewById(R.id.seekBar0);
-		seekBar0.setMax(200);
-		seekBar0.setProgress((int) threshold1);
-		final TextView seekBarValue0 = (TextView)findViewById(R.id.textViewStatus0);
-		seekBarValue0.setText(String.valueOf(threshold1));
-		seekBar0.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-			boolean fromUser) {
-				// TODO Auto-generated method stub
-				seekBarValue0.setText(String.valueOf(progress));
-				threshold1 = progress;
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-			}
-		});
-		
-		TextView textViewName1 = (TextView)findViewById(R.id.textViewName1);
-		textViewName1.setText("Threshold2");
-		SeekBar seekBar1 = (SeekBar)findViewById(R.id.seekBar1);
-		seekBar1.setMax(200);
-		seekBar1.setProgress((int) threshold2);
-		final TextView seekBarValue1 = (TextView)findViewById(R.id.textViewStatus1);
-		seekBarValue1.setText(String.valueOf(threshold2));
-		seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-			boolean fromUser) {
-				// TODO Auto-generated method stub
-				seekBarValue1.setText(String.valueOf(progress));
-				threshold2 = progress;
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-			}
-		});
-		
-//		SeekBar seekBar2 = (SeekBar)findViewById(R.id.seekBar2);
-//		final TextView seekBarValue2 = (TextView)findViewById(R.id.textViewStatus2);
-//		seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//
-//			@Override
-//			public void onProgressChanged(SeekBar seekBar, int progress,
-//			boolean fromUser) {
-//				// TODO Auto-generated method stub
-//				seekBarValue2.setText(String.valueOf(progress));
-//			}
-//
-//			@Override
-//			public void onStartTrackingTouch(SeekBar seekBar) {
-//				// TODO Auto-generated method stub
-//			}
-//
-//			@Override
-//			public void onStopTrackingTouch(SeekBar seekBar) {
-//				// TODO Auto-generated method stub
-//			}
-//		});
-//		
-//		SeekBar seekBar3 = (SeekBar)findViewById(R.id.seekBar3);
-//		final TextView seekBarValue3 = (TextView)findViewById(R.id.textViewStatus3);
-//		seekBar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//
-//			@Override
-//			public void onProgressChanged(SeekBar seekBar, int progress,
-//			boolean fromUser) {
-//				// TODO Auto-generated method stub
-//				seekBarValue3.setText(String.valueOf(progress));
-//			}
-//
-//			@Override
-//			public void onStartTrackingTouch(SeekBar seekBar) {
-//				// TODO Auto-generated method stub
-//			}
-//
-//			@Override
-//			public void onStopTrackingTouch(SeekBar seekBar) {
-//				// TODO Auto-generated method stub
-//			}
-//		});
 	}
 
 	@Override
@@ -241,7 +138,7 @@ public class ImageActivity extends Activity implements CvCameraViewListener2 {
 
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 		Mat rgba = inputFrame.rgba();
-//		Imgproc.Canny(rgba, rgba, threshold1, threshold2);
+
 		return rgba;
 	}
 }
